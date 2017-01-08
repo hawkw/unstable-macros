@@ -13,17 +13,32 @@
 #[macro_export]
 macro_rules! unstable_const_fn {
     (   $(#[$attr:meta])*
-        $(pub)* const fn $name:ident($($arg:ident: $arg_ty:ty),*) -> $ty:ty {
+        pub const fn $name:ident($($arg:ident: $arg_ty:ty),*) -> $ty:ty {
         $($body:expr)+
     }) => {
         #[cfg(features = "unstable")]
         $(#[$attr])*
-        $(pub)* const fn $name($($arg: $arg_ty),*) -> $ty {
+        pub const fn $name($($arg: $arg_ty),*) -> $ty {
             $($body)+
         }
         #[cfg(not(features = "unstable"))]
         $(#[$attr])*
-        $(pub)* const fn $name($($arg: $arg_ty),*) -> $ty {
+        pub const fn $name($($arg: $arg_ty),*) -> $ty {
+            $($body)+
+        }
+    };
+    (   $(#[$attr:meta])*
+        const fn $name:ident($($arg:ident: $arg_ty:ty),*) -> $ty:ty {
+        $($body:expr)+
+    }) => {
+        #[cfg(features = "unstable")]
+        $(#[$attr])*
+        const fn $name($($arg: $arg_ty),*) -> $ty {
+            $($body)+
+        }
+        #[cfg(not(features = "unstable"))]
+        $(#[$attr])*
+        const fn $name($($arg: $arg_ty),*) -> $ty {
             $($body)+
         }
     };
