@@ -1,0 +1,6 @@
+[package]
+name = "unstable-macros"
+version = "0.0.1"
+authors = ["Eliza Weisman <hi@hawkweisman.me>"]
+
+[dependencies]
