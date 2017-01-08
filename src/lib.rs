@@ -7,9 +7,24 @@
 //! "unstable" if compiling on nightly.
 //  TODO: allow support for different unstable feature flags?
 
-#[cfg(test)]
-mod tests {
-    #[test]
-    fn it_works() {
-    }
+/// Macro for making something a `const fn` if on unstable
+///
+/// If compiling on stable Rust, the function will be `#[inline]` instead.
+#[macro_export]
+macro_rules! unstable_const_fn {
+    (   $(#[$attr:meta])*
+        $($public:tt)* const fn $name:ident($(arg:expr),*) -> $ty:ty {
+        $($body:expr)+
+    }) => {
+        #[cfg(features = "unstable")]
+        $(#[$attr])*
+        $($public)* const fn $name($($arg),*) -> $ty {
+            $($body)+
+        }
+        #[cfg(not(features = "unstable"))]
+        $(#[$attr])*
+        $($public)* const fn $name($($arg),*) -> $ty {
+            $($body)+
+        }
+    };
 }
