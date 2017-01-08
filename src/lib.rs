@@ -13,7 +13,7 @@
 #[macro_export]
 macro_rules! unstable_const_fn {
     (   $(#[$attr:meta])*
-        $(pub)* const fn $name:ident($(arg:expr),*) -> $ty:ty {
+        $(pub)* const fn $name:ident($(arg:tt),*) -> $ty:ty {
         $($body:expr)+
     }) => {
         #[cfg(features = "unstable")]
