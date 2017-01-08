@@ -23,7 +23,8 @@ macro_rules! unstable_const_fn {
         }
         #[cfg(not(features = "unstable"))]
         $(#[$attr])*
-        pub const fn $name($($arg: $arg_ty),*) -> $ty {
+        #[inline]
+        pub fn $name($($arg: $arg_ty),*) -> $ty {
             $($body)+
         }
     };
@@ -38,7 +39,8 @@ macro_rules! unstable_const_fn {
         }
         #[cfg(not(features = "unstable"))]
         $(#[$attr])*
-        const fn $name($($arg: $arg_ty),*) -> $ty {
+        #[inline]
+        fn $name($($arg: $arg_ty),*) -> $ty {
             $($body)+
         }
     };
